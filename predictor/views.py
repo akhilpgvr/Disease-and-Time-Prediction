@@ -9,6 +9,16 @@ from rest_framework.decorators import api_view
 # Load models and encoder safely
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+from django.http import JsonResponse
+
+def predict_prognosis(request):
+    if request.method == 'GET':
+        symptoms = request.GET.getlist('symptoms')
+        # Process the symptoms and return prediction
+        return JsonResponse({"prediction": "some_disease"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+
 def load_and_fix_model(model_path):
     """Loads and re-saves the model to prevent version issues."""
     model = joblib.load(model_path)
